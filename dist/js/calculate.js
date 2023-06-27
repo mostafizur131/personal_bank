@@ -1,34 +1,44 @@
+// Utilities
+function getInputValue(id) {
+  let getInputValueElem = document.getElementById(id);
+  const inputValue = parseFloat(getInputValueElem.value);
+  getInputValueElem.value = "";
+  return inputValue;
+}
+
+function getTextValue(id) {
+  let getTextValueElem = document.getElementById(id);
+  const TextValue = parseFloat(getTextValueElem.innerText);
+  return TextValue;
+}
+
+function setTextValue(id, value) {
+  let getElem = document.getElementById(id);
+  getElem.innerText = value;
+}
+
 // Calculate Deposit
 document.getElementById("deposit").addEventListener("click", () => {
-  let getDepositAmountStr = document.getElementById("inputDeposit");
-  const getDepositAmount = parseFloat(getDepositAmountStr.value);
-  const getTotalDepositAmountStr = document.getElementById("totalDeposit");
-  const getTotalDepositAmount = parseFloat(getTotalDepositAmountStr.innerText);
-  const getTotalBalanceStr = document.getElementById("totalBalance");
-  const getTotalBalance = parseFloat(getTotalBalanceStr.innerText);
-  getDepositAmountStr.value = "";
+  let getDepositAmount = getInputValue("inputDeposit");
+  const getTotalDepositAmount = getTextValue("totalDeposit");
+  const getTotalBalance = getTextValue("totalBalance");
   // Show Deposit Amount
   if (isNaN(getDepositAmount)) {
     alert("Please Input Valid Amount");
     return;
   } else {
-    getTotalDepositAmountStr.innerText =
-      getTotalDepositAmount + getDepositAmount;
-    getTotalBalanceStr.innerText = getTotalBalance + getDepositAmount;
+    const totalDeposit = getTotalDepositAmount + getDepositAmount;
+    const totalBalance = getTotalBalance + getDepositAmount;
+    setTextValue("totalDeposit", totalDeposit);
+    setTextValue("totalBalance", totalBalance);
   }
 });
 
 // Calculate Withdraw
 document.getElementById("withdraw").addEventListener("click", () => {
-  let getWithdrawAmountStr = document.getElementById("inputWithdraw");
-  const getWithdrawAmount = parseFloat(getWithdrawAmountStr.value);
-  const getTotalWithdrawAmountStr = document.getElementById("totalWithdraw");
-  const getTotalWithdrawAmount = parseFloat(
-    getTotalWithdrawAmountStr.innerText
-  );
-  const getTotalBalanceStr = document.getElementById("totalBalance");
-  const getTotalBalance = parseFloat(getTotalBalanceStr.innerText);
-  getWithdrawAmountStr.value = "";
+  const getWithdrawAmount = getInputValue("inputWithdraw");
+  const getTotalWithdrawAmount = getTextValue("totalWithdraw");
+  const getTotalBalance = getTextValue("totalBalance");
   // Show Withdraw Amount
   if (isNaN(getWithdrawAmount)) {
     alert("Please Input Valid Amount");
@@ -37,8 +47,9 @@ document.getElementById("withdraw").addEventListener("click", () => {
     alert("Insufficient Balance");
     return;
   } else {
-    getTotalWithdrawAmountStr.innerText =
-      getTotalWithdrawAmount + getWithdrawAmount;
-    getTotalBalanceStr.innerText = getTotalBalance - getWithdrawAmount;
+    const currentWithdrawAmount = getTotalWithdrawAmount + getWithdrawAmount;
+    const currentBalance = getTotalBalance - getWithdrawAmount;
+    setTextValue("totalWithdraw", currentWithdrawAmount);
+    setTextValue("totalBalance", currentBalance);
   }
 });
